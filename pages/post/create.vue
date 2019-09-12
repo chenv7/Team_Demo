@@ -28,26 +28,19 @@
             <el-button type="primary" size="small" @click="handleAdd">发布</el-button>
             <span class="submit-text">
               或者
-              <a href="#">保存到草稿箱</a>
+              <a href="javascript:;" @click="handleSave">保存到草稿箱</a>
             </span>
           </div>
         </div>
         <div class="drafts-aside">
-          <h4>草稿箱 ( 1 )</h4>
+          <h4>草稿箱 ( {{$store.state.post.draftsTitle.length}} )</h4>
           <div class="drafts-list">
-            <div class="drafts-item">
+            <div class="drafts-item" v-for="(item,index) in $store.state.post.draftsTitle" :key="index">
               <div class="drafts-post-title">
-                文字
+                 {{item.title}}
                 <i class="el-icon-edit"></i>
               </div>
               <p class="time">{{new Date() | timeFormat}}</p>
-            </div>
-            <div class="drafts-item">
-              <div class="drafts-post-title">
-                文字
-                <i class="el-icon-edit"></i>
-                <p class="time">{{new Date() | timeFormat}}</p>
-              </div>
             </div>
           </div>
         </div>
@@ -229,6 +222,21 @@ export default {
           }
         }
       });
+    },
+
+    //保存到草稿箱
+    handleSave() {
+      //保存到草稿箱需要检测用户是否有登录
+      if(!this.$store.state.user.userInfo.token) {
+        this.$message.warning('请先登录')
+        this.$router.push({path : '/user/login'})
+        return
+      }
+      //注意的是需要倒序插入
+      //使用vuex管理数据
+      this.addPost.content = this.$refs.vueEditor.editor.root.innerHTML
+      this.$store.commit('post/setDraftsTitle',this.addPost)
+      this.$message.success('已保存到草稿箱')
     }
   }
 };
