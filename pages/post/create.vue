@@ -35,7 +35,9 @@
         <div class="drafts-aside">
           <h4>草稿箱 ( {{$store.state.post.draftsTitle.length}} )</h4>
           <div class="drafts-list">
-            <div class="drafts-item" v-for="(item,index) in $store.state.post.draftsTitle" :key="index">
+            <div class="drafts-item" v-for="(item,index) in $store.state.post.draftsTitle" 
+            :key="index"
+            @click="handleTitle(index)">
               <div class="drafts-post-title">
                  {{item.title}}
                 <i class="el-icon-edit"></i>
@@ -237,6 +239,14 @@ export default {
       this.addPost.content = this.$refs.vueEditor.editor.root.innerHTML
       this.$store.commit('post/setDraftsTitle',this.addPost)
       this.$message.success('已保存到草稿箱')
+    },
+
+    //点击草稿箱的标题显示默认数据
+    handleTitle(index) {
+      let info = this.$store.state.post.draftsTitle
+      this.addPost.title = info[index].title
+      this.$refs.vueEditor.editor.root.innerHTML = info[index].content
+      this.addPost.city = info[index].city
     }
   }
 };
@@ -304,6 +314,10 @@ export default {
           margin-bottom: 10px;
           .drafts-post-title {
             font-size: 14px;
+            &:hover {
+              cursor: pointer;
+              color: #ffa500;
+            }
           }
           .time {
             font-size: 14px;
