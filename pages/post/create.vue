@@ -7,10 +7,12 @@
           <p class="share">分享你的个人游记，让更多人看到哦！</p>
           <el-form ref="form" class="form">
             <el-form-item class="input-title">
-              <el-input v-model="addPost.title" placeholder="请输入标题"></el-input>
+              <el-input v-model="addPost.title" placeholder="请输入标题" v-myfocus></el-input>
             </el-form-item>
             <el-form-item class="textarea">
-              <VueEditor :config="config" ref="vueEditor" />
+              <div>
+                <VueEditor :config="config" ref="vueEditor" />
+              </div>
             </el-form-item>
             <el-form-item label="选择城市" class="city">
               <i class="el-icon-location"></i>
@@ -35,7 +37,8 @@
         <div class="drafts-aside">
           <h4>草稿箱 ( {{$store.state.post.draftsTitle.length}} )</h4>
           <div class="drafts-list">
-            <div class="drafts-item" v-for="(item,index) in $store.state.post.draftsTitle" 
+            <div class="drafts-item"
+             v-for="(item,index) in $store.state.post.draftsTitle" 
             :key="index"
             @click="handleTitle(index)">
               <div class="drafts-post-title">
@@ -52,7 +55,11 @@
 </template>
 <script>
 import "quill/dist/quill.snow.css";
+//引入过滤器
 import { timeFormat } from "@/tools/myfilters";
+//引入自定义指令
+import {myfocus} from '@/tools/myDirectives'
+
 let VueEditor;
 
 if (process.browser) {
@@ -129,9 +136,14 @@ export default {
     //注册富文本框
     VueEditor
   },
+  
   //过滤器
   filters: {
     timeFormat
+  },
+  //自定义指令
+  directives : {
+    myfocus
   },
   methods: {
     //输入搜索游玩城市触发
@@ -239,6 +251,8 @@ export default {
       this.addPost.content = this.$refs.vueEditor.editor.root.innerHTML
       this.$store.commit('post/setDraftsTitle',this.addPost)
       this.$message.success('已保存到草稿箱')
+      //刷新当前页面
+      location.reload()
     },
 
     //点击草稿箱的标题显示默认数据
