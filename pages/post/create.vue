@@ -88,15 +88,24 @@ export default {
         uploadImage: {
           url: "http://localhost:1337/upload",
           name: "files",
+
+          //上传之前触发
           uploadBefore(file) {
-            return true;
+            // console.log(file)
+            if(!file.type.startsWith("image/")) {
+              that.$message.warning('请选择正确的图片格式,如jpg/png/jpge')
+            }
+            return true
           },
+
           uploadProgress(res) {},
+
+          //上传成功触发
           uploadSuccess(res, insert) {
             insert("http://localhost:1337" + res.data[0].url);
           },
           uploadError() {},
-          showProgress: false
+          showProgress: true
         },
 
         uploadVideo: {
@@ -210,11 +219,14 @@ export default {
         },
         data: this.addPost
       }).then(res => {
-        console.log(res);
+        // console.log(res);
         if (res.status === 200) {
-          this.$message.success("发布成功");
+          this.$message.success(res.data.message);
           //清空表单
-          this.$refs.form.resetFields();
+          this.$refs.vueEditor.editor.root.innerHTML = "";
+          for (let key in this.addPost) {
+            this.addPost[key] = "";
+          }
         }
       });
     }
