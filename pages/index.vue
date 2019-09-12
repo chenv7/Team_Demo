@@ -75,6 +75,7 @@ export default {
     }).then(res => {
       const { data } = res.data;
       this.banners = data;
+      console.log(this.banners)
     });
   },
   methods: {
