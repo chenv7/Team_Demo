@@ -37,12 +37,14 @@
         <div class="drafts-aside">
           <h4>草稿箱 ( {{$store.state.post.draftsTitle.length}} )</h4>
           <div class="drafts-list">
-            <div class="drafts-item"
-             v-for="(item,index) in $store.state.post.draftsTitle" 
-            :key="index"
-            @click="handleTitle(index)">
+            <div
+              class="drafts-item"
+              v-for="(item,index) in $store.state.post.draftsTitle"
+              :key="index"
+              @click="handleTitle(index)"
+            >
               <div class="drafts-post-title">
-                 {{item.title}}
+                {{item.title}}
                 <i class="el-icon-edit"></i>
               </div>
               <p class="time">{{new Date() | timeFormat}}</p>
@@ -53,6 +55,7 @@
     </div>
   </div>
 </template>
+
 <script>
 import "quill/dist/quill.snow.css";
 //引入过滤器
@@ -65,9 +68,12 @@ let VueEditor;
 if (process.browser) {
   VueEditor = require("vue-word-editor").default;
 }
+
 export default {
   name: "app",
   data() {
+    //让this指向组件
+    var that = this;
     return {
       //引入富文本框配置
       config: {
@@ -94,17 +100,15 @@ export default {
           //上传之前触发
           uploadBefore(file) {
             // console.log(file)
-            if(!file.type.startsWith("image/")) {
-              that.$message.warning('请选择正确的图片格式,如jpg/png/jpge')
+            if (!file.type.startsWith("image/")) {
+              that.$message.warning("请选择正确的图片格式,如jpg/png/jpge");
             }
-            return true
+            return true;
           },
-
           uploadProgress(res) {},
-
-          //上传成功触发
           uploadSuccess(res, insert) {
             insert("http://localhost:1337" + res.data[0].url);
+            // console.log(res)
           },
           uploadError() {},
           showProgress: true
@@ -136,7 +140,6 @@ export default {
     //注册富文本框
     VueEditor
   },
-  
   //过滤器
   filters: {
     timeFormat
@@ -241,16 +244,16 @@ export default {
     //保存到草稿箱
     handleSave() {
       //保存到草稿箱需要检测用户是否有登录
-      if(!this.$store.state.user.userInfo.token) {
-        this.$message.warning('请先登录')
-        this.$router.push({path : '/user/login'})
-        return
+      if (!this.$store.state.user.userInfo.token) {
+        this.$message.warning("请先登录");
+        this.$router.push({ path: "/user/login" });
+        return;
       }
       //注意的是需要倒序插入
       //使用vuex管理数据
-      this.addPost.content = this.$refs.vueEditor.editor.root.innerHTML
-      this.$store.commit('post/setDraftsTitle',this.addPost)
-      this.$message.success('已保存到草稿箱')
+      this.addPost.content = this.$refs.vueEditor.editor.root.innerHTML;
+      this.$store.commit("post/setDraftsTitle", this.addPost)
+      this.$message.success("已保存到草稿箱")
       //刷新当前页面
       location.reload()
     },
@@ -265,7 +268,6 @@ export default {
   }
 };
 </script>
-
 <style lang="less" scoped>
 .container {
   width: 1000px;

@@ -1,16 +1,24 @@
 // 用户管理
 export const state = () => {
     return {
-        commentCount: 0
+        commentCount: 0,
+        //定义存储草稿箱标题
+        draftsTitle: []
     }
 }
 
 export const mutations = {
-    setUserInfo() { },
+    setUserInfo() {},
     setCommentCount(state, count) {
         state.commentCount = count
+    },
+
+    //设置草稿箱标题
+    setDraftsTitle(state, data) {
+        state.draftsTitle.unshift(data)
     }
 };
 export const actions = {
 
 }
+
