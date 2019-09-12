@@ -56,9 +56,170 @@
   </div>
 </template>
 <script>
-export default {
-  
+import "quill/dist/quill.snow.css";
+import { timeFormat } from "@/tools/myfilters";
+let VueEditor;
+
+if (process.browser) {
+  VueEditor = require("vue-word-editor").default;
 }
+export default {
+  name: "app",
+  data() {
+    return {
+      //引入富文本框配置
+      config: {
+        modules: {
+          // 工具栏
+          toolbar: [
+            ["bold", "italic", "underline", "strike"], // toggled buttons
+            // ["blockquote", "code-block"],
+            [{ header: 1 }, { header: 2 }], // custom button values
+
+            ["image", "video"]
+            // [{ list: "ordered" }, { list: "bullet" }],
+            // [{ script: "sub" }, { script: "super" }], // superscript/subscript
+            // [{ indent: "-1" }, { indent: "+1" }], // outdent/indent
+            // [{ direction: "rtl" }] // text direction
+          ]
+        },
+        // 主题
+        theme: "snow",
+        uploadImage: {
+          url: "http://localhost:1337/upload",
+          name: "files",
+          uploadBefore(file) {
+            return true;
+          },
+          uploadProgress(res) {},
+          uploadSuccess(res, insert) {
+            insert("http://localhost:1337" + res.data[0].url);
+          },
+          uploadError() {},
+          showProgress: false
+        },
+
+        uploadVideo: {
+          //url: "http://157.122.54.189:9095/upload",
+          url: "http://localhost:1337/upload",
+          name: "files",
+          uploadBefore(file) {
+            return true;
+          },
+          uploadProgress(res) {},
+          uploadSuccess(res, insert) {
+            insert("http://localhost:1337" + res.data[0].url);
+          },
+          uploadError() {}
+        }
+      },
+      //绑定新增文章数据
+      addPost: {
+        content: "", //文章内容
+        title: "", //文章标题
+        city: "" //城市id/名称
+      }
+    };
+  },
+  components: {
+    //注册富文本框
+    VueEditor
+  },
+  //过滤器
+  filters: {
+    timeFormat
+  },
+  methods: {
+    //输入搜索游玩城市触发
+    querySearchCity(queryString, cb) {
+      // console.log(queryString)
+      //获取城市
+      this.$axios({
+        url: "/airs/city",
+        params: { name: queryString }
+      }).then(res => {
+        // console.log(res);
+        if (res.status === 200) {
+          this.cityData = res.data.data.map(e => {
+            return {
+              ...e,
+              value: e.name
+            };
+          });
+          cb(this.cityData);
+        }
+      });
+    },
+
+    //搜索游玩城市触发失焦触发
+    handleBlur() {
+      //当用户没有输全时默认第一个
+      if (this.addPost.city) {
+        this.addPost.city = this.cityData[0].name;
+      }
+    },
+
+    //选中下拉项时触发
+    handleSelect(obj) {
+      // console.log(obj)
+      this.addPost.city = obj.name;
+    },
+
+    //发布文章
+    handleAdd() {
+      this.addPost.content = this.$refs.vueEditor.editor.root.innerHTML;
+      // console.log(this.addPost)
+      //非空检测
+      const rules = {
+        title: {
+          value: this.addPost.title,
+          message: "请输入标题"
+        },
+        city: {
+          value: this.addPost.city,
+          message: "请选择城市"
+        }
+      };
+
+      //先假设结果成立
+      let valid = true;
+
+      //在循环里面找反例
+      Object.keys(rules).forEach(v => {
+        //只要有一个不成立即可停止
+        if (!valid) return;
+
+        let item = rules[v];
+
+        if (!item.value) {
+          valid = false;
+          this.$alert(item.message, "提示", {
+            confirmButtonText: "确定",
+            type: "warning"
+          });
+        }
+      });
+
+      if (!valid) return;
+
+      this.$axios({
+        url: "/posts",
+        method: "post",
+        headers: {
+          Authorization: `Bearer ${this.$store.state.user.userInfo.token}`
+        },
+        data: this.addPost
+      }).then(res => {
+        console.log(res);
+        if (res.status === 200) {
+          this.$message.success("发布成功");
+          //清空表单
+          this.$refs.form.resetFields();
+        }
+      });
+    }
+  }
+};
 </script>
 
 <style lang="less" scoped>
