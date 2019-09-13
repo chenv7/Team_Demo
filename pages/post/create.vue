@@ -5,7 +5,14 @@
         <el-row type="flex" justify="space-between">
           <div class="publish">
             <h2 class="title">发表新攻略</h2>
-            <p class="share">分享你的个人游记，让更多人看到哦！</p>
+            <p class="share">分享你的个人游记，让更多人看到哦！
+            <el-button type="primary" 
+            class="addBtn" plain 
+            icon="el-icon-plus" 
+            size="mini"
+            v-show="isShow"
+            @click="handleAddBtn">发表攻略</el-button>
+            </p>
             <el-form ref="form" class="form">
               <el-form-item class="input-title">
                 <el-input v-model="addPost.title" placeholder="请输入标题" v-myfocus></el-input>
@@ -141,7 +148,9 @@ export default {
         content: "", //文章内容
         title: "", //文章标题
         city: "" //城市id/名称
-      }
+      },
+      //定义一个变量是否弹出新增攻略按钮
+      isShow : false
     };
   },
   components: {
@@ -268,6 +277,7 @@ export default {
 
     //点击草稿箱的标题显示默认数据
     handleTitle(index) {
+      this.isShow = true
       let info = this.$store.state.post.draftsTitle
       this.addPost.title = info[index].title;
       this.$refs.vueEditor.editor.root.innerHTML = info[index].content;
@@ -282,6 +292,7 @@ export default {
         cancelButtonText: "取消",
         type: "warning"
       }).then(() => {
+        this.isShow = false
         this.$store.commit("post/deleteDraftsTitle", index);
         this.$message.success("删除成功");
         //让内容清空
@@ -290,6 +301,15 @@ export default {
         }       
         this.$refs.vueEditor.editor.root.innerHTML = ""
       });
+    },
+
+    //点击新增攻略按钮触发
+    handleAddBtn() {
+      this.isShow = false
+      for (var key in this.addPost) {
+        this.addPost[key] = "";
+      }
+      this.$refs.vueEditor.editor.root.innerHTML = "";
     }
   }
 };
@@ -316,6 +336,9 @@ export default {
           font-size: 12px;
           color: #999;
           margin-bottom: 10px;
+          .addBtn {
+            margin-left: 15px;
+          }
         }
         .form {
           .textarea {
