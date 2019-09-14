@@ -10,7 +10,7 @@
     </el-row>
     <div class="content" @mouseenter="isShow=true" @mouseleave="isShow=false">{{data.content}}</div>
     <div class="reSay" @mouseenter="isShow=true" @mouseleave="isShow=false">
-      <a href="#" v-show="isShow">回复</a>
+      <a href="JavaScript:" v-show="isShow" @click="setCommentId(data.id)">回复</a>
     </div>
   </div>
 </template>
@@ -24,7 +24,13 @@ export default {
       isShow: false
     };
   },
-  methods: {},
+  methods: {
+    setCommentId(id){
+      // console.log(id)
+      this.$store.commit('post/setCommentId',id)
+      console.log(this.$store.state.post.commentId)
+    }
+  },
   filters: {
     timeFormat(time) {
       return moment(time).format("YYYY-MM-DD HH:mm");

@@ -20,7 +20,8 @@
           <CommentLoop :data="item.parent" v-if="item.parent" />
           <div class="content" @mouseenter="current=index" @mouseleave="current=-1">{{item.content}}</div>
           <div class="reSay" @mouseenter="current=index" @mouseleave="current=-1">
-            <a href="#" v-show="current===index">回复</a>
+            <a href="JavaScript:" v-show="current===index"
+            @click="setCommentId(item.id)">回复</a>
           </div>
         </el-col>
       </el-row>
@@ -72,6 +73,11 @@ export default {
     this.init();
   },
   methods: {
+    setCommentId(id){
+      // console.log(id)
+      this.$store.commit('post/setCommentId',id)
+      // console.log(this.$store.state.post.commentId)
+    },
     init() {
       const { id } = this.$route.query;
       this.commentsData.post = id;
