@@ -10,7 +10,7 @@
     </el-row>
     <div class="content" @mouseenter="isShow=true" @mouseleave="isShow=false">{{data.content}}</div>
     <div class="reSay" @mouseenter="isShow=true" @mouseleave="isShow=false">
-      <a href="JavaScript:" v-show="isShow" @click="setCommentId(data.id)">回复</a>
+      <a href="JavaScript:" v-show="isShow" @click="setCommentId(data)">回复</a>
     </div>
   </div>
 </template>
@@ -25,10 +25,12 @@ export default {
     };
   },
   methods: {
-    setCommentId(id){
-      // console.log(id)
-      this.$store.commit('post/setCommentId',id)
-      console.log(this.$store.state.post.commentId)
+    setCommentId(item){
+      const commentInfo = {};
+      commentInfo.id=item.id;
+      commentInfo.nickname = item.account.nickname
+      this.$store.commit('post/setCommentInfo',commentInfo)
+      console.log(this.$store.state.post.commentInfo)
     }
   },
   filters: {

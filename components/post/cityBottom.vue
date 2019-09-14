@@ -21,7 +21,7 @@
           <div class="content" @mouseenter="current=index" @mouseleave="current=-1">{{item.content}}</div>
           <div class="reSay" @mouseenter="current=index" @mouseleave="current=-1">
             <a href="JavaScript:" v-show="current===index"
-            @click="setCommentId(item.id)">回复</a>
+            @click="setCommentId(item)">回复</a>
           </div>
         </el-col>
       </el-row>
@@ -73,10 +73,13 @@ export default {
     this.init();
   },
   methods: {
-    setCommentId(id){
-      // console.log(id)
-      this.$store.commit('post/setCommentId',id)
-      // console.log(this.$store.state.post.commentId)
+    setCommentId(item){
+      // console.log(item);
+      const commentInfo = {};
+      commentInfo.id=item.id;
+      commentInfo.nickname = item.account.nickname
+      this.$store.commit('post/setCommentInfo',commentInfo)
+      console.log(this.$store.state.post.commentInfo)
     },
     init() {
       const { id } = this.$route.query;

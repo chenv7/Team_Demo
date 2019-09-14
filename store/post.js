@@ -4,7 +4,7 @@ export const state = () => {
         //当前攻略评论数
         commentCount: 0,
         //选取回复攻略id
-        commentId:0,
+        commentInfo:{},
         //定义存储草稿箱标题
         draftsTitle: []
     }
@@ -17,8 +17,8 @@ export const mutations = {
         state.commentCount = count
     },
     //设置选取回复攻略id
-    setCommentId(state,id){
-        state.commentId=id
+    setCommentInfo(state,data){
+        state.commentInfo=data
     },
 
     //设置草稿箱标题

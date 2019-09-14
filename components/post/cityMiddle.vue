@@ -1,6 +1,7 @@
 <template>
   <div class="middle">
     <h3>评论</h3>
+    
     <el-input type="textarea" :rows="2" resize="none" placeholder="请输入内容" v-model="textarea"></el-input>
     <el-row class="cmt-input" type="flex" justify="space-between">
       <div style="width:644px">
