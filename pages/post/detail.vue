@@ -4,7 +4,7 @@
           <el-col>
               <div class="content">
                   <CityTop :data="destData"/>
-                  <CityMiddle/>
+                  <CityMiddle :data="destData"/>
                   <CityBottom/>
               </div>
           </el-col>
@@ -57,10 +57,7 @@ export default {
     .content{
         // background-color: red;
         width: 700px;
-        .middle{
-            background-color: pink;
-            height: 200px;
-        }
+        
         
     }
     .aside{

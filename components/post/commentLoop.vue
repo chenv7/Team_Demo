@@ -30,7 +30,8 @@ export default {
       commentInfo.id=item.id;
       commentInfo.nickname = item.account.nickname
       this.$store.commit('post/setCommentInfo',commentInfo)
-      console.log(this.$store.state.post.commentInfo)
+      this.$store.commit('post/setCommentIsShow',1)
+      // console.log(this.$store.state.post.commentInfo)
     }
   },
   filters: {

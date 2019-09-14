@@ -45,9 +45,15 @@ export default {
       fileList: []
     };
   },
+  props: {
+    data: {
+      type: Object,
+      default: {}
+    }
+  },
   methods: {
-    handleClose(){
-      this.$store.commit('post/setCommentIsShow',0)
+    handleClose() {
+      this.$store.commit("post/setCommentIsShow", 0);
     },
     handleRemove(file, fileList) {
       console.log(file, fileList);
@@ -58,7 +64,33 @@ export default {
       this.dialogVisible = true;
     },
     handleUpload() {
-      console.log(this.fileList);
+      // console.log(this.fileList);
+      // console.log(this.data.data[0].id)
+      let uploadData = {};
+      uploadData.content = this.textarea;
+      uploadData.post = this.data.data[0].id;
+      if (this.$store.state.post.commentIsShow) {
+        uploadData.follow = this.$store.state.post.commentInfo.id;
+      }
+      uploadData.pics = this.fileList;
+      let token = JSON.parse(localStorage.getItem("yourkey")).user.userInfo
+        .token;
+      // console.log(token);
+      console.log(uploadData);
+      // this.$axios({
+      //   url:'/comments',
+      //   method:'post',
+      //   headers:{
+      //     Authorization:`Bearer ${token}`,
+      //     // ContentType:'application/json'
+      //   },
+      //   data:uploadData,
+      // }) .then(res=>{
+      //   console.log(res)
+      // }) .catch(err=>{
+      //   // console.log(123),
+      //   console.log(err)
+      // })
     },
     handleChange(file, fileList) {
       this.fileList = fileList;
@@ -89,5 +121,27 @@ export default {
   width: 100px !important;
   height: 100px !important;
   line-height: 100px;
+}
+h3{
+  margin-bottom: 30px;
+}
+.el-textarea__inner {
+  display: block;
+  resize: vertical;
+  padding: 5px 15px;
+  margin: 10px 0;
+  line-height: 1.5;
+  box-sizing: border-box;
+  width: 100%;
+  font-size: inherit;
+  color: #606266;
+  background-color: #fff;
+  background-image: none;
+  border: 1px solid #dcdfe6;
+  border-radius: 4px;
+  transition: border-color 0.2s cubic-bezier(0.645, 0.045, 0.355, 1);
+}
+.cmt-input{
+  margin-bottom: 30px
 }
 </style>

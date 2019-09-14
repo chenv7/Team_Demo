@@ -80,7 +80,7 @@ export default {
       commentInfo.nickname = item.account.nickname
       this.$store.commit('post/setCommentInfo',commentInfo)
       this.$store.commit('post/setCommentIsShow',1)
-      console.log(this.$store.state.post)
+      // console.log(this.$store.state.post)
     },
     init() {
       const { id } = this.$route.query;
