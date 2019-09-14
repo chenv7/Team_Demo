@@ -9,6 +9,7 @@
           list-type="picture-card"
           :on-preview="handlePictureCardPreview"
           :on-remove="handleRemove"
+          :on-change="handleChange"
         >
           <i class="el-icon-plus"></i>
         </el-upload>
@@ -17,7 +18,8 @@
         </el-dialog>
       </div>
       <div style="width:56px">
-        <button type="info" style="width:100%;backgroundColor:#409eff;border-radius:5px">提交</button>
+        <button type="info" style="width:100%;backgroundColor:#409eff;border-radius:5px"
+        @click="handleUpload">提交</button>
       </div>
     </el-row>
   </div>
@@ -29,32 +31,50 @@ export default {
     return {
       textarea: "",
       dialogImageUrl: "",
-      dialogVisible: false
+      dialogVisible: false,
+      fileList:[]
     };
   },
   methods: {
     handleRemove(file, fileList) {
       console.log(file, fileList);
+      // this.handleUpload=fileList
     },
     handlePictureCardPreview(file) {
       this.dialogImageUrl = file.url;
       this.dialogVisible = true;
+    },
+    handleUpload(){
+      console.log(this.fileList)
+    },
+    handleChange(file,fileList){
+      this.fileList=fileList
     }
   }
 };
 </script>
 
 <style>
-.el-upload--picture-card{
-    width: 100px;
-    height: 100px;
-    text-align: center;
-    line-height: 100px
+.el-upload-list--picture-card .el-upload-list__item {
+  overflow: hidden;
+  background-color: #fff;
+  border: 1px solid #c0ccda;
+  border-radius: 6px;
+  box-sizing: border-box;
+  width: 100px;
+  height: 100px;
+  margin: 0 8px 8px 0;
+  display: inline-block;
 }
-.el-upload-list__item-actions{
-    width: 100px !important;
-    height: 100px !important;
-    line-height: 100px;
-    
+.el-upload--picture-card {
+  width: 100px;
+  height: 100px;
+  text-align: center;
+  line-height: 100px;
+}
+.el-upload-list__item-actions {
+  width: 100px !important;
+  height: 100px !important;
+  line-height: 100px;
 }
 </style>
