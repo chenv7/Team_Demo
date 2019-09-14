@@ -1,7 +1,13 @@
 <template>
   <div class="middle">
     <h3>评论</h3>
-    
+    <div v-show="$store.state.post.commentIsShow">
+      <el-tag
+        closable
+        :disable-transitions="false"
+        @close="handleClose"
+      >{{$store.state.post.commentInfo.nickname}}</el-tag>
+    </div>
     <el-input type="textarea" :rows="2" resize="none" placeholder="请输入内容" v-model="textarea"></el-input>
     <el-row class="cmt-input" type="flex" justify="space-between">
       <div style="width:644px">
@@ -19,8 +25,11 @@
         </el-dialog>
       </div>
       <div style="width:56px">
-        <button type="info" style="width:100%;backgroundColor:#409eff;border-radius:5px"
-        @click="handleUpload">提交</button>
+        <button
+          type="info"
+          style="width:100%;backgroundColor:#409eff;border-radius:5px"
+          @click="handleUpload"
+        >提交</button>
       </div>
     </el-row>
   </div>
@@ -33,10 +42,13 @@ export default {
       textarea: "",
       dialogImageUrl: "",
       dialogVisible: false,
-      fileList:[]
+      fileList: []
     };
   },
   methods: {
+    handleClose(){
+      this.$store.commit('post/setCommentIsShow',0)
+    },
     handleRemove(file, fileList) {
       console.log(file, fileList);
       // this.handleUpload=fileList
@@ -45,11 +57,11 @@ export default {
       this.dialogImageUrl = file.url;
       this.dialogVisible = true;
     },
-    handleUpload(){
-      console.log(this.fileList)
+    handleUpload() {
+      console.log(this.fileList);
     },
-    handleChange(file,fileList){
-      this.fileList=fileList
+    handleChange(file, fileList) {
+      this.fileList = fileList;
     }
   }
 };

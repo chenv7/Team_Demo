@@ -5,6 +5,8 @@ export const state = () => {
         commentCount: 0,
         //选取回复攻略id
         commentInfo:{},
+        //是否隐藏回复对象
+        commentIsShow:0,
         //定义存储草稿箱标题
         draftsTitle: []
     }
@@ -12,6 +14,10 @@ export const state = () => {
 
 export const mutations = {
     setUserInfo() {},
+    //设置回复当前文章或评论
+    setCommentIsShow(state,num){
+        state.commentIsShow=num
+    },
     //设置当前攻略评论数
     setCommentCount(state, count) {
         state.commentCount = count
