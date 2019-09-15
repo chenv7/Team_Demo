@@ -1,15 +1,15 @@
 <template>
   <div class="post-list">
     <div class="post-item1" v-for="(item,id) in data.data" :key="id">
-      <h4 class="post-title">
-        <nuxt-link :to="'/post/detail?id='+item.id">{{item.title}}</nuxt-link>
-      </h4>
+      <nuxt-link :to="'/post/detail?id='+item.id">
+      <h4 class="post-title">{{item.title}}</h4>
       <p class="post-desc" v-html="item.content"></p>
       <div class="post-images">
         <a href v-for="(imgItem,imgIndex) in item.images" :key="imgIndex">
           <img :src="imgItem" alt />
         </a>
       </div>
+      </nuxt-link>
       <div class="post-footer">
         <div class="post-footer-left">
           <span>
