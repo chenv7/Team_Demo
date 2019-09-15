@@ -7,6 +7,8 @@ export const state = () => {
         commentInfo:{},
         //是否隐藏回复对象
         commentIsShow:0,
+        //每页显示评论数
+        _start:0,
         //定义存储草稿箱标题
         draftsTitle: []
     }
@@ -14,6 +16,10 @@ export const state = () => {
 
 export const mutations = {
     setUserInfo() {},
+    //设置当前显示评论数
+    setStart(state,num){
+        state._start=num
+    },
     //设置回复当前文章或评论
     setCommentIsShow(state,num){
         state.commentIsShow=num

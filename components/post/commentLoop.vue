@@ -4,11 +4,16 @@
     <el-row type="flex" justify="space-between" class="title">
       <div class="userInfo" type="flex">
         <span>{{data.account.nickname}}</span>
-        <span>{{data.account.created_at | timeFormat}}</span>
+        <span>{{data.created_at | timeFormat}}</span>
       </div>
       <div class="level" style="margin-right:10px">{{data.level}}</div>
     </el-row>
-    <div class="content" @mouseenter="isShow=true" @mouseleave="isShow=false">{{data.content}}</div>
+    <div class="content" @mouseenter="isShow=true" @mouseleave="isShow=false">
+      {{data.content}}
+      <el-row type="flex">
+        <img :src="`${$axios.defaults.baseURL}${imgItem.url}`" alt="" v-for="(imgItem,imgId) in data.pics" :key="imgId" style="width:100px">
+      </el-row>
+    </div>
     <div class="reSay" @mouseenter="isShow=true" @mouseleave="isShow=false">
       <a href="JavaScript:" v-show="isShow" @click="setCommentId(data)">回复</a>
     </div>
@@ -42,7 +47,9 @@ export default {
   props: {
     data: {
       type: Object,
-      default: {}
+      default: {
+
+      }
     }
   }
 };

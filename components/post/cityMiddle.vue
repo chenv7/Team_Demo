@@ -1,6 +1,6 @@
 <template>
   <div class="middle">
-    <h3>评论</h3>
+    <h3 id="comment">评论</h3>
     <div v-show="$store.state.post.commentIsShow">
       <el-tag
         closable
@@ -12,11 +12,12 @@
     <el-row class="cmt-input" type="flex" justify="space-between">
       <div style="width:644px">
         <el-upload
-          action="https://jsonplaceholder.typicode.com/posts/"
+          action=""
           list-type="picture-card"
-          :on-preview="handlePictureCardPreview"
-          :on-remove="handleRemove"
-          :on-change="handleChange"
+          :http-request="handleFile" 
+          :headers="
+          {Authorization: `Bearer [${$store.state.user.userInfo.token}]`}"
+          name="files"
         >
           <i class="el-icon-plus"></i>
         </el-upload>
@@ -42,7 +43,8 @@ export default {
       textarea: "",
       dialogImageUrl: "",
       dialogVisible: false,
-      fileList: []
+      fileList: [],
+      pics:[]
     };
   },
   props: {
@@ -72,29 +74,83 @@ export default {
       if (this.$store.state.post.commentIsShow) {
         uploadData.follow = this.$store.state.post.commentInfo.id;
       }
-      uploadData.pics = this.fileList;
-      let token = JSON.parse(localStorage.getItem("yourkey")).user.userInfo
+      uploadData.pics = this.pics;
+      let token = JSON.parse(localStorage.getItem("store")).user.userInfo
         .token;
       // console.log(token);
-      console.log(uploadData);
-      // this.$axios({
-      //   url:'/comments',
-      //   method:'post',
-      //   headers:{
-      //     Authorization:`Bearer ${token}`,
-      //     // ContentType:'application/json'
-      //   },
-      //   data:uploadData,
-      // }) .then(res=>{
-      //   console.log(res)
-      // }) .catch(err=>{
-      //   // console.log(123),
-      //   console.log(err)
-      // })
+      // console.log(uploadData);
+      this.$axios({
+        url: "/comments",
+        method: "post",
+        headers: {
+          Authorization: `Bearer ${token}`
+          // ContentType:'application/json'
+        },
+        data: uploadData
+      })
+        .then(res => {
+          // console.log(res);
+          if(res.status===200){
+            this.$message.success('提交成功')
+            this.textarea='';
+            this.follow=0;
+            this.pics=[];
+            this.fileList=[];
+            this.$store.commit("post/setCommentIsShow", 0);
+            this.$store.commit('post/setStart',0)
+            this.$axios({
+              url:'/posts/comments',
+              params:{
+                post:uploadData.post,
+                _limit:2,
+                _start:0
+              }
+            }) .then(res=>{
+              // console.log(res)
+              this.$store.commit('post/setCommentCount',res.data.total)
+            })
+          }
+          // this.$router.push("/post/detail?id=" + this.data.data[0].id);
+        })
+        .catch(err => {
+          // console.log(123),
+          console.log(err);
+        });
     },
     handleChange(file, fileList) {
-      this.fileList = fileList;
+      // this.fileList = fileList;
+      console.log(this.fileList);
+    },
+    handleFile(files){
+      this.$axios
+        .post("http://127.0.0.1:1337/upload", null, {
+          transformRequest: [
+            () => {
+              let formData = new FormData();
+              formData.append("files", files.file);
+              return formData;
+            }
+          ]
+        })
+        .then(res => {
+          // this.discussImg=data.data
+          this.pics.push(res.data[0]);
+          console.log(this.pics);
+          // this.pics=[]
+          // console.log(this.content.pics);
+        });
     }
+  },
+  mounted() {
+    // console.log(localStorage.getItem('yourkey'))
+    this.$store.commit("post/setCommentIsShow", 0);
+    this.tokenOrg = JSON.parse(
+      localStorage.getItem("store")
+    ).user.userInfo.token;
+    setTimeout(()=>{
+      console.log(this.$store.state.user.userInfo.token);
+      console.log(JSON.parse(localStorage.getItem("store")).user.userInfo.token)
+    },10)
   }
 };
 </script>
@@ -122,7 +178,7 @@ export default {
   height: 100px !important;
   line-height: 100px;
 }
-h3{
+h3 {
   margin-bottom: 30px;
 }
 .el-textarea__inner {
@@ -141,7 +197,7 @@ h3{
   border-radius: 4px;
   transition: border-color 0.2s cubic-bezier(0.645, 0.045, 0.355, 1);
 }
-.cmt-input{
-  margin-bottom: 30px
+.cmt-input {
+  margin-bottom: 30px;
 }
 </style>
