@@ -74,6 +74,14 @@ export default {
     };
   },
   watch: {
+    '$route.fullPath':{
+      handler(newData,oldData){
+        console.log(123);
+        this.init()
+      },
+      deep:true,
+      immediate:true
+    },
     "$store.state.post.commentCount": {
       handler(newStart, oldStart) {
         this.commentsData._start = 0;

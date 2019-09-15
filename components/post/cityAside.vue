@@ -89,7 +89,9 @@ methods:{
     }
     .content{
         position: relative;
+        width: 170px;
         span{
+          width: 170px;
             font-size: 12px;
             color: #aaa;
             position: absolute;

@@ -53,6 +53,9 @@ export default {
   watch: {
     "$route.fullPath": {
       handler(newPath, oldPath) {
+        this.destData={
+          data: [{ title: "" }]
+        };
         this.init();
       },
       deep: true,
