@@ -6,209 +6,7 @@
       <el-breadcrumb-item>南京市酒店预订</el-breadcrumb-item>
     </el-breadcrumb>
     <!-- 输入框内容区 -->
-<<<<<<< HEAD
-    <el-row type="flex">
-      <el-col :span="4">
-        <el-input placeholder="目的地"></el-input>
-      </el-col>
-      <el-col :span="16">
-        <el-date-picker
-          v-model="value6"
-          type="daterange"
-          range-separator="-"
-          start-placeholder="开始日期"
-          end-placeholder="结束日期"
-        ></el-date-picker>
-        <el-select v-model="value7" placeholder="请选择">
-          <el-option-group v-for="group in options3" :key="group.label" :label="group.label">
-            <el-option
-              v-for="item in group.options"
-              :key="item.value"
-              :label="item.label"
-              :value="item.value"
-            ></el-option>
-          </el-option-group>
-        </el-select>
-      </el-col>
-      <el-col :span="4"></el-col>
-    </el-row>
-
-    <!-- 住宿要求 -->
-    <div class="list-filter" style="height:68px">
-      <div style="margin-left:-20px;margin-right:-20px">
-        <!-- 价格 -->
-        <el-col :span="8" class="hua" style="padding:5px 20px;border-right: 1px solid #ccc">
-          <div style="width:205px;height:19px">
-            <el-col :span="12">价格</el-col>
-            <el-col :span="12" style="text-align:right;">0-0</el-col>
-          </div>
-          <el-slider style="width:205px" v-model="value1"></el-slider>
-        </el-col>
-        <!-- 住宿等级 -->
-        <el-col class="Levelimport" :span="6" style="padding:5px 20px;border-right: 1px solid #ccc">
-          <el-col>住宿等级</el-col>
-          <div class="profession">
-            <el-dropdown>
-              <span>
-                不限
-                <i class="el-icon-arrow-down el-icon--right" style="margin-left:98px"></i>
-              </span>
-              <el-dropdown-menu slot="dropdown">
-                <el-dropdown-item
-                  v-for="(item,index) in grangehotel.levels"
-                  :key="index"
-                >{{item.name}}</el-dropdown-item>
-              </el-dropdown-menu>
-            </el-dropdown>
-          </div>
-        </el-col>
-        <!-- 住宿类型 -->
-        <el-col class="Levelimport" :span="6" style="padding:5px 20px;border-right: 1px solid #ccc">
-          <el-col>住宿类型</el-col>
-          <div class="profession">
-            <el-dropdown>
-              <span>
-                不限
-                <i class="el-icon-arrow-down el-icon--right" style="margin-left:98px"></i>
-              </span>
-              <el-dropdown-menu slot="dropdown">
-                <el-dropdown-item
-                  v-for="(item,index) in grangehotel.types"
-                  :key="index"
-                >{{item.name}}</el-dropdown-item>
-              </el-dropdown-menu>
-            </el-dropdown>
-          </div>
-        </el-col>
-        <!-- 住宿设施 -->
-        <el-col class="Levelimport" :span="6" style="padding:5px 20px;border-right: 1px solid #ccc">
-          <el-col>住宿设施</el-col>
-          <div class="profession">
-            <el-dropdown>
-              <span>
-                不限
-                <i class="el-icon-arrow-down el-icon--right" style="margin-left:98px"></i>
-              </span>
-              <el-dropdown-menu slot="dropdown">
-                <el-dropdown-item
-                  v-for="(item,index) in grangehotel.assets"
-                  :key="index"
-                >{{item.name}}</el-dropdown-item>
-              </el-dropdown-menu>
-            </el-dropdown>
-          </div>
-        </el-col>
-        <!-- 住宿品牌 -->
-        <el-col class="Levelimport" :span="6" style="padding:5px 20px">
-          <el-col>住宿品牌</el-col>
-          <div class="profession">
-            <el-dropdown>
-              <span>
-                不限
-                <i class="el-icon-arrow-down el-icon--right" style="margin-left:98px"></i>
-              </span>
-              <el-dropdown-menu slot="dropdown">
-                <el-dropdown-item
-                  v-for="(item,index) in grangehotel.brands"
-                  :key="index"
-                >{{item.name}}</el-dropdown-item>
-              </el-dropdown-menu>
-            </el-dropdown>
-          </div>
-        </el-col>
-      </div>
-    </div>
-
-    <!-- 酒店详情 -->
-    <div>
-      <el-row class="hotel-item" v-for="(item,index) in formlist" :key="index">
-        <!-- 左侧图片 -->
-        <el-col :span="8" class="docs-sidebar">
-          <span class="img-wrapper">
-            <a :href="`${item.id}`">
-              <img :src="`${item.photos}`" width="320px" height="210px" />
-            </a>
-          </span>
-        </el-col>
-        <!-- 中间详情 -->
-        <el-col :span="10" class="nationally">
-          <h4 class="hotel-cn-name">
-            <a href="#">{{item.name}}</a>
-          </h4>
-          <div class="hotel-en-name">
-            <span>{{item.alias}}</span>
-            <span title>
-              <!-- 皇冠 -->
-              <i class="iconfont iconhuangguan"></i>
-              <i class="iconfont iconhuangguan"></i>
-              <i class="iconfont iconhuangguan"></i>
-            </span>
-            <span>{{item.hoteltype.name}}</span>
-          </div>
-          <div class="anaddress">
-            <el-col :span="10">
-              <el-rate
-                v-model="value12"
-                disabled
-                show-score
-                text-color="#ff9900"
-                score-template="{value}"
-              ></el-rate>
-            </el-col>
-            <el-col :span="7">
-              <span>20</span>
-              条评价
-            </el-col>
-            <el-col :span="7">
-              <span>20</span>
-              篇游记
-            </el-col>
-          </div>
-          <div class="hotel-summary-row"></div>
-          <!-- 地点 -->
-          <div class="location-row">
-            <i class="iconfont iconlocation"></i>
-            位于: {{item.address}}
-          </div>
-        </el-col>
-        <!-- 右侧价格 -->
-        <el-col class="pice" :span="6">
-          <table style="width: 100%">
-            <tbody class="buanshou">
-              <tr @click="hadelClick" v-for="(items,index) in item.products" :key="index">
-                <td class="column-td">
-                  <div>{{items.name}}</div>
-                </td>
-                <td class="column-td">
-                  <div>
-                    <span>￥{{items.price}}</span>起
-                    <i class="el-icon-arrow-right"></i>
-                  </div>
-                </td>
-              </tr>
-            </tbody>
-          </table>
-        </el-col>
-      </el-row>
-    </div>
-
-    <!-- 分页 -->
-    <div class="enablePaging">
-      <el-pagination
-        small
-        @size-change="handleSizeChange"
-        @current-change="handleCurrentChange"
-        :current-page="form._start"
-        :page-size="form._limit"
-        prev-text="上一页"
-        next-text="下一页"
-
-        :total="total"
-      ></el-pagination>
-    </div>
-=======
     <HotelMap :data="hotelData" />
->>>>>>> 2a8389aa746beb4b96fc0f7bde143ce66babc2e8
   </div>
 </template>
 
@@ -250,10 +48,6 @@ export default {
       total: 0, //总条数
       value1: 4000, //滑块
       value6: "",
-<<<<<<< HEAD
-      value12: 3.5, //评分
-=======
->>>>>>> 2a8389aa746beb4b96fc0f7bde143ce66babc2e8
       options3: [
         {
           label: "热门城市",
@@ -269,12 +63,8 @@ export default {
           ]
         }
       ],
-<<<<<<< HEAD
-      value7: ""
-=======
       value7: "",
       hotelData: []
->>>>>>> 2a8389aa746beb4b96fc0f7bde143ce66babc2e8
     };
   },
   methods: {

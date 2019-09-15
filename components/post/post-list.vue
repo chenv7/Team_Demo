@@ -1,6 +1,6 @@
 <template>
   <div class="post-list">
-    <div class="post-item1" v-for="(item,id) in dataList" :key="id">
+    <div class="post-item1" v-for="(item,id) in data.data" :key="id">
       <h4 class="post-title">
         <nuxt-link :to="'/post/detail?id='+item.id">{{item.title}}</nuxt-link>
       </h4>
@@ -14,27 +14,27 @@
         <div class="post-footer-left">
           <span>
             <i class="el-icon-location-outline"></i>
-            <span v-for="(cityItem,cityIndex) in item.cityName" :key="cityIndex">
-              <span>{{cityItem.cityName}}</span>
+            <span >
+              <span>{{item.cityName}}</span>
             </span>
           </span>&nbsp;&nbsp;&nbsp;
           <div class="post-user">
             by&nbsp;&nbsp;
-            <a href v-for="(avaItem,avaIndex) in item.account.defaultAvatar" :key="avaIndex">
-              <img :src="avaItem" />
+            <a href >
+              <img :src="`${$axios.defaults.baseURL}${item.account.defaultAvatar}`" />
             </a>&nbsp;&nbsp;
-            <a href v-for="(nickItem,nickIndex) in item.account.nickname" :key="nickIndex">
-              <span>{{nickItem.account.nickname}}</span>
+            <a href >
+              <span>{{item.account.nickname}}</span>
             </a>
           </div>&nbsp;&nbsp;&nbsp;
           <span>
-            <i class="el-icon-view"></i> 7777
+            <i class="el-icon-view"></i> {{item.watch}}
           </span>
         </div>
-        <span class="post-footer-right">50 赞</span>
+        <span class="post-footer-right">{{item.like}} 赞</span>
       </div>
     </div>
-    <div class="post-item2">
+    <!-- <div class="post-item2">
       <div class="post-images">
         <a href>
           <img
@@ -71,7 +71,7 @@
           <span class="post-footer-right">50 赞</span>
         </div>
       </div>
-    </div>
+    </div> -->
   </div>
 </template>
 <script>
@@ -81,11 +81,17 @@ export default {
       dataList: [],
     };
   },
+  props:{
+    data:{
+      type:Object,
+      default:{}
+    }
+  },
   mounted() {
     this.$axios({
       url: "/posts?_start=0&_limit=3"
     }).then(res => {
-      console.log(res);
+      // console.log(res);
       this.dataList = res.data.data;
     });
   }

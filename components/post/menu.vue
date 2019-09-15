@@ -21,7 +21,6 @@
         </ul>
       </li>
     </ul>
-<<<<<<< HEAD
     <!-- 推荐城市部分 -->
     <div class="aside-recommend">
       <h4 class="aside-title">推荐城市</h4>
@@ -31,11 +30,7 @@
     </div>
   </div>
 </template>
-=======
-  </div>
-</template>
 
->>>>>>> a465af5ec2d68741a4b9342b223307cca9cd54d7
 <script>
 export default {
   data() {
@@ -47,60 +42,30 @@ export default {
   mounted() {
     this.$axios({
       url: "/posts/cities"
-<<<<<<< HEAD
     }).then(res => {
       this.menuData = res.data.data;
     });
   },
   methods: {
     handleHover(index) {
-=======
-    })
-      .then(res => {
-        this.menuData = res.data.data;
-        console.log(this.menuData);
-      })
-      .catch(err => {
-        console.log(err);
-      });
-  },
-  methods: {
-    handleHover(index) {
       //   console.log(index)
->>>>>>> a465af5ec2d68741a4b9342b223307cca9cd54d7
       this.isRight = index;
     },
     handleLeave() {
       this.isRight = "";
     },
-<<<<<<< HEAD
     handleCity(city) {
-      this.$router.push(`/post?city=${city}`);
-=======
-    handleCity(city){
         this.$router.push(`/post?city=${city}`)
->>>>>>> a465af5ec2d68741a4b9342b223307cca9cd54d7
     }
   }
 };
 </script>
-<<<<<<< HEAD
-<style lang="less" scoped>
-.menu {
-  li {
-    list-style: none;
-  }
-  box-sizing: border-box;
-  .menu-item {
-    border: 1px solid #ddd;
-=======
 
 <style lang="less" scoped>
 .menu {
   box-sizing: border-box;
   .menu-item {
     border: 1px solid #eee;
->>>>>>> a465af5ec2d68741a4b9342b223307cca9cd54d7
     width: 258px;
     height: 39px;
     line-height: 39px;
@@ -110,42 +75,16 @@ export default {
       border-right: none;
     }
     .left {
-<<<<<<< HEAD
-      font-size: 14px;
+      img{
+        width: 100%;
+      }
       i {
         float: right;
         line-height: 39px;
-        font-size: 20px;
-        color: #999999;
-=======
-      i {
-        float: right;
-        line-height: 39px;
->>>>>>> a465af5ec2d68741a4b9342b223307cca9cd54d7
       }
     }
     .right {
       position: absolute;
-<<<<<<< HEAD
-      border: 1px solid #ddd;
-      border-left: none;
-      width: 350px;
-      z-index: 1;
-      left: 280px;
-      top: 16px;
-      background: #fff;
-      padding-left: 60px;
-      box-shadow: 0 0 1px #eee;
-      li {
-        i {
-          margin-left: -40px;
-          font-size: 20px;
-        }
-        em {
-          font-size: 14px;
-          font-style: normal;
-          margin: 0 10px;
-=======
       border:1px solid #eee;
       border-left: none;
       width: 360px;
@@ -158,17 +97,12 @@ export default {
           font-size: 20px;
         }
         em {
->>>>>>> a465af5ec2d68741a4b9342b223307cca9cd54d7
           &:hover {
             text-decoration: underline;
             cursor: pointer;
           }
         }
         span {
-<<<<<<< HEAD
-          font-size: 14px;
-=======
->>>>>>> a465af5ec2d68741a4b9342b223307cca9cd54d7
           color: #999;
           &:hover {
             text-decoration: underline;
@@ -178,23 +112,12 @@ export default {
       }
     }
   }
-<<<<<<< HEAD
-
-      .aside-recommend {
-      margin-top: 20px;
-
-      img {
+  .aside-recommend{
+    .aside-recommend-item{
+      img{
         width: 100%;
-        display: block;
-      }
-      .aside-title {
-        font-weight: 400;
-        padding-bottom: 10px;
-        border-bottom: 1px solid #ddd;
-        margin-bottom: 10px;
       }
     }
-=======
->>>>>>> a465af5ec2d68741a4b9342b223307cca9cd54d7
+  }
 }
 </style>

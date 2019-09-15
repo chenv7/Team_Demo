@@ -4,7 +4,7 @@
       <el-col :span="7">
         <Menu />
       </el-col>
-      <el-col span="17">
+      <el-col :span="17">
         <div class="post-wrapper">
           <!-- 搜索框内容 -->
           <div class="search-wrapper">
@@ -30,21 +30,21 @@
               推荐攻略
               <span></span>
             </h4>
-            <button type="button" class="el-button el-button--primary">
+            <button type="button" class="el-button el-button--primary" @click="$router.push('/post/create')">
               <i class="el-icon-edit"></i>
               <span>写游记</span>
             </button>
           </div>
         </div>
-        <Postlist />
+        <Postlist :data='dataList'/>
         <el-pagination
           @size-change="handleSizeChange"
           @current-change="handleCurrentChange"
           :current-page="pageIndex"
-          :page-sizes="[5, 10, 15, 20]"
+          :page-sizes="[3, 4, 5, 6]"
           :page-size="pageSize"
           layout="total, sizes, prev, pager, next, jumper"
-          :total="total"
+          :total="dataList.total"
         ></el-pagination>
       </el-col>
     </el-row>
@@ -58,14 +58,35 @@ export default {
     Menu,
     Postlist
   },
+  data(){
+    return{
+      dataList:{},
+      pageIndex:1,
+      pageSize:3
+    }
+  },
+  mounted(){
+    this.init()
+  },
   methods: {
+    init(){
+      this.$axios({
+      url: `/posts?_start=${(this.pageIndex-1)*2}&_limit=${this.pageSize}`
+    }).then(res => {
+      // console.log(res);
+      this.dataList=res.data;
+      console.log(this.dataList)
+    });
+    },
     // 每页条数切换时候触发, val是条数
     handleSizeChange(val) {
       this.pageSize = val;
+      this.init()
     },
     // 页码切换时候触发, val是点击的页码
     handleCurrentChange(val) {
       this.pageIndex = val; // 当前页
+      this.init()
     }
   }
 };
