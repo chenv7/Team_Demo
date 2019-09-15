@@ -10,7 +10,7 @@
       >
         <div class="left">
           {{item.type}}
-          <i class="el-icon-arrow-right">&nbsp;&nbsp;</i>
+          <i class="el-icon-arrow-right"></i>
         </div>
         <ul class="right" v-show="isRight===index">
           <li v-for="(item2,index2) in item.children" :key="index2" @click="handleCity(item2.city)">
@@ -63,13 +63,16 @@ export default {
 
 <style lang="less" scoped>
 .menu {
+  margin-top: 16px;
   box-sizing: border-box;
   .menu-item {
-    border: 1px solid #eee;
+    border: 1px solid #ddd;
     width: 258px;
-    height: 39px;
-    line-height: 39px;
+    height: 40px;
+    line-height: 40px;
     padding: 0 10px;
+    font-size: 14px;
+    z-index: 2;
     &:hover {
       color: orange;
       border-right: none;
@@ -79,8 +82,10 @@ export default {
         width: 100%;
       }
       i {
+        display: block;
+        font-size: 20px;
         float: right;
-        line-height: 39px;
+        line-height: 40px;
       }
     }
     .right {
@@ -94,7 +99,9 @@ export default {
       background-color: #fff;
       li {
         i {
-          font-size: 20px;
+          padding-left: 15px;
+          font-size: 24px;
+          font-style: italic;
         }
         em {
           &:hover {
@@ -113,6 +120,13 @@ export default {
     }
   }
   .aside-recommend{
+    margin-top: 20px;
+    .aside-title{
+      font-weight: 400;
+    padding-bottom: 10px;
+    border-bottom: 1px solid #ddd;
+    margin-bottom: 10px;
+    }
     .aside-recommend-item{
       img{
         width: 100%;

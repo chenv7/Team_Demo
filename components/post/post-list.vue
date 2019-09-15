@@ -1,6 +1,6 @@
 <template>
   <div class="post-list">
-    <div class="post-item1" v-for="(item,id) in data.data" :key="id">
+    <div class="post-item" v-for="(item,id) in data.data" :key="id">
       <nuxt-link :to="'/post/detail?id='+item.id">
       <h4 class="post-title">{{item.title}}</h4>
       <p class="post-desc" v-html="item.content"></p>
@@ -34,44 +34,6 @@
         <span class="post-footer-right">{{item.like}} 赞</span>
       </div>
     </div>
-    <!-- <div class="post-item2">
-      <div class="post-images">
-        <a href>
-          <img
-            src="https://p3-q.mafengwo.net/s13/M00/41/C4/wKgEaVyaOs2AA9IKAAj8Lg2YzaU64.jpeg?imageMogr2%2Fthumbnail%2F1360x%2Fstrip%2Fquality%2F90"
-            alt
-          />
-        </a>
-      </div>
-      <div class="post-right">
-        <h4 class="post-title">
-          <a href>远东行：用好奇心打量这座城 —— 最值得收藏的海参崴出行攻略</a>
-        </h4>
-        <p class="post-desc">
-          <a
-            href
-          >大家对塞班岛总存在着这样的误解，知道它是美属地盘，就理所当然地觉得这里的花费一定很高，花费高有高的玩法，那如果只有6000块的预算呢？要怎么玩？关于旅行这件事，我们要让钱花得更有道理，收下这份攻略，带你6000块花式玩转塞班。图：塞班岛。 by第5季旅游一、怎样用6000块玩转塞班？大多数出境游客人不做预算或最终花费远远超出预算，对预算的合理分配对控制我们旅行的花费就很重要了，如何只花6000块玩转塞班岛，对预算超支say no？</a>
-        </p>
-        <div class="post-footer">
-          <div class="post-footer-left">
-            <span>
-              <i class="el-icon-location-outline">北京市</i>
-            </span>&nbsp;&nbsp;&nbsp;
-            <div class="post-user">
-              by&nbsp;&nbsp;
-              <a href>
-                <img src="http://157.122.54.189:9095/assets/images/avatar.jpg" />
-              </a>&nbsp;&nbsp;
-              <a href>地球发动机</a>
-            </div>&nbsp;&nbsp;&nbsp;
-            <span>
-              <i class="el-icon-view"></i> 7777
-            </span>
-          </div>
-          <span class="post-footer-right">50 赞</span>
-        </div>
-      </div>
-    </div> -->
   </div>
 </template>
 <script>
@@ -100,7 +62,7 @@ export default {
 <style lang="less" scoped>
 .post-list {
   margin-left: 30px;
-  .post-item1 {
+  .post-item {
     width: 100%;
     padding: 20px 0;
     border-bottom: 1px solid #eee;
@@ -135,12 +97,14 @@ export default {
       }
     }
     .post-images {
+      overflow: hidden;
       margin: 15px 0;
       align-items: center;
       justify-content: space-between;
       display: flex;
       box-sizing: border-box;
       img {
+
         width: 220px;
         height: 150px;
         display: block;
