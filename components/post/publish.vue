@@ -250,6 +250,7 @@ export default {
           for (let key in this.addPost) {
             this.addPost[key] = "";
           }
+          this.$router.back()
         }
       });
     },
