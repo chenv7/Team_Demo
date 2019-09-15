@@ -13,6 +13,7 @@
       <div style="width:644px">
         <el-upload
           action=""
+          ref="upload"
           list-type="picture-card"
           :on-preview="handlePictureCardPreview"
           :http-request="handleFile" 
@@ -104,7 +105,8 @@ export default {
             this.pics=[];
             this.fileList=[];
             this.$store.commit("post/setCommentIsShow", 0);
-            this.$store.commit('post/setStart',0)
+            this.$store.commit('post/setStart',0);
+            this.$refs.upload.clearFiles();
             this.$axios({
               url:'/posts/comments',
               params:{
