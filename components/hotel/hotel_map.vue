@@ -1,45 +1,25 @@
 <template>
   <div class="hotel_map">
-    <el-row type="flex">
-      <el-col :span="4">
-        <el-input placeholder="目的地"></el-input>
-      </el-col>
-      <el-col :span="16">
-        <el-date-picker
-          v-model="value6"
-          type="daterange"
-          range-separator="-"
-          start-placeholder="开始日期"
-          end-placeholder="结束日期"
-        ></el-date-picker>
-        <el-select v-model="value7" placeholder="请选择">
-          <el-option-group v-for="group in options3" :key="group.label" :label="group.label">
-            <el-option
-              v-for="item in group.options"
-              :key="item.value"
-              :label="item.label"
-              :value="item.value"
-            ></el-option>
-          </el-option-group>
-        </el-select>
-      </el-col>
-      <el-col :span="4">
-        <el-button type="primary">查看价格</el-button>
-      </el-col>
-    </el-row>
     <!-- 地图区域 -->
     <el-row type="flex" class="kuangkuang">
-      <el-col :span="14" class="quyu">
+      <el-col :span="14" class="quyu" ref="aeras">
         <el-row type="flex">
           <el-col :span="3">
             <span>区域:</span>
           </el-col>
           <el-col :span="21">
-            <a>全部</a>
-            <a href v-for="(e,i) in data" :key="i" class="areas">{{e.name}}</a>
+            <el-row type="flex" justify>
+              <el-col :span="24" :class="{quyu2 : isHidden}">
+                <a>全部</a>
+                <a href v-for="(e,i) in data" :key="i" class="areas">{{e.name}}</a>
+              </el-col>
+            </el-row>
             <el-row type="flex">
               <el-col :span="24">
-                <div class="fuhao"><i class="el-icon-d-arrow-right"></i><span>等43个区域</span></div>
+                <div class="fuhao" @click="isHidden=!isHidden" style="cursor: pointer">
+                  <i class="el-icon-d-arrow-right" ref="icons"></i>
+                  <span>等43个区域</span>
+                </div>
               </el-col>
             </el-row>
           </el-col>
@@ -92,35 +72,135 @@ export default {
   },
   data() {
     return {
-      value6: "",
-      options3: [
-        {
-          label: "热门城市",
-          options: [
-            {
-              value: "Shanghai",
-              label: "上海"
-            },
-            {
-              value: "Beijing",
-              label: "北京"
-            }
-          ]
-        }
-      ],
-      value7: ""
+      mapList: [],
+      isHidden: true
     };
   },
   mounted() {
-    window.onLoad = function() {
-      var map = new AMap.Map("container");
-    };
+    //地图引入
+    let mapData = [];
     var url =
       "https://webapi.amap.com/maps?v=1.4.15&key=86a32ed5ac2d661a18261d5aa64e2ccc&callback=onLoad";
     var jsapi = document.createElement("script");
     jsapi.charset = "utf-8";
     jsapi.src = url;
     document.head.appendChild(jsapi);
+    this.$axios({
+      url: "http://157.122.54.189:9095/hotels?&city=74&scenic=3231"
+    }).then(res => {
+      console.log(res);
+      let ditu = res.data.data;
+      ditu.forEach(e => {
+        this.mapList.push(e.location);
+        this.mapData = this.mapList;
+      });
+      console.log(this.mapList);
+      //将数据转化为 [{键：值},{键：值}] 类型
+      let mapDataList = [];
+      // console.log(mapDataList, "zui");
+      for (let i = 0; i < this.mapData.length; i++) {
+        if (i < 10) {
+          mapDataList.push(this.mapData[i].longitude, this.mapData[i].latitude);
+        }
+      } //将数据转成{[{数据},{数据}] 类型
+      window.onLoad = function() {
+        var map = new AMap.Map("container", {
+          center: [118.793579, 31.98425], //地图首先显示的坐标
+          viewMode: "3D" //使用3D视图,
+        });
+        //创建地图标点
+        console.log(ditu, "zuixin");
+
+        let marker1 = new AMap.Marker({
+          position: new AMap.LngLat(mapDataList[0], mapDataList[1]),
+          content: `<div class="nibaba">1</div>`,
+          title: `${ditu[0].name}`
+        });
+        let marker2 = new AMap.Marker({
+          position: new AMap.LngLat(mapDataList[2], mapDataList[3]),
+          content: `<div class="nibaba">2</div>`,
+          title: `${ditu[1].name}`
+        });
+        // console.log(marker2, "2");
+        let marker3 = new AMap.Marker({
+          position: new AMap.LngLat(mapDataList[4], mapDataList[5]),
+          content: `<div class="nibaba">3</div>`,
+          title: `${ditu[2].name}`
+        });
+        // console.log(marker3, "3");
+        let marker4 = new AMap.Marker({
+          position: new AMap.LngLat(mapDataList[6], mapDataList[7]),
+          content: `<div class="nibaba">4</div>`,
+          title: `${ditu[3].name}`
+        });
+        // console.log(marker4, "4");
+        let marker5 = new AMap.Marker({
+          position: new AMap.LngLat(mapDataList[8], mapDataList[9]),
+          content: `<div class="nibaba">5</div>`,
+          title: `${ditu[4].name}`
+        });
+        // console.log(marker5, "5");
+        let marker6 = new AMap.Marker({
+          position: new AMap.LngLat(mapDataList[10], mapDataList[11]),
+          content: `<div class="nibaba">6</div>`,
+          title: `${ditu[5].name}`
+        });
+        // console.log(marker6, "6");
+        let marker7 = new AMap.Marker({
+          position: new AMap.LngLat(mapDataList[12], mapDataList[13]),
+          content: `<div class="nibaba">7</div>`,
+          title: `${ditu[6].name}`
+        });
+        // console.log(marker7, "7");
+        let marker8 = new AMap.Marker({
+          position: new AMap.LngLat(mapDataList[14], mapDataList[15]),
+          content: `<div class="nibaba">8</div>`,
+          title: `${ditu[7].name}`
+        });
+        // console.log(marker8, "8");
+        let marker9 = new AMap.Marker({
+          position: new AMap.LngLat(mapDataList[16], mapDataList[17]),
+          content: `<div class="nibaba">9</div>`,
+          title: `${ditu[8].name}`
+        });
+        let marker10 = new AMap.Marker({
+          position: new AMap.LngLat(mapDataList[18], mapDataList[19]),
+          content: `<div class="nibaba">10</div>`,
+          title: `${ditu[9].name}`
+        });
+        // console.log(marker9, "9");
+        map.add([
+          marker1,
+          marker2,
+          marker3,
+          marker4,
+          marker5,
+          marker6,
+          marker7,
+          marker8,
+          marker9,
+          marker10
+        ]);
+      };
+    });
+  },
+  methods: {
+    //点击人数未定的框框弹出事件
+    /*areaChange() {
+       if (this.aerapanduan === false) {
+        this.$refs.aeras.$el.childNodes[0].childNodes[2].childNodes[0].style.height =
+          "42px";
+        this.$refs.aeras.$el.childNodes[0].childNodes[2].childNodes[0].removeAttribute('overflow');
+        this.$refs.icons.style.transform = "rotateZ(90deg)";
+        this.aerapanduan = true;
+      } else if (this.aerapanduan === true) {
+        this.$refs.aeras.$el.childNodes[0].childNodes[2].childNodes[0].style.height =
+          "152px";
+        
+        this.$refs.icons.style.transform = "rotateZ(270deg)";
+        this.aerapanduan = false;
+      } 
+    }*/
   }
 };
 </script>
@@ -131,13 +211,18 @@ export default {
   color: #666;
   padding-left: 5px;
 
-  .quyu{
+  .quyu {
     padding-right: 5px;
-    .fuhao{
-      i{
-        color:#ff9900;
-        transform: rotate(90deg);
-        margin-right:5px;
+    .quyu2 {
+      overflow: hidden;
+      height: 42px;
+    }
+    .fuhao {
+      width: 100px;
+      i {
+        color: #ff9900;
+        transform: rotateZ(90deg);
+        margin-right: 5px;
       }
     }
   }
@@ -162,5 +247,16 @@ export default {
 #container {
   width: 420px;
   height: 260px;
+}
+/deep/ .nibaba {
+  display: inline-block;
+  width: 22px;
+  height: 36px;
+  text-align: center;
+  line-height: 24px;
+  background: url("https://webapi.amap.com/theme/v1.3/markers/b/mark_b.png");
+  background-size: 22px 36px;
+  color: #fff;
+  font-size: 20px;
 }
 </style>
