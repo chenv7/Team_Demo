@@ -50,12 +50,18 @@ export default {
         });
     }
   },
-  watch:{
-
+  watch: {
+    "$route.fullPath": {
+      handler(newPath, oldPath) {
+        this.init();
+      },
+      deep: true,
+      immediate: true
+    }
   },
   mounted() {
     // console.log(this.$route.query)
-    this.init()
+    this.init();
   }
 };
 </script>

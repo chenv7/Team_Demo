@@ -55,7 +55,7 @@ filters:{
 },
 methods:{
     handle(id){
-        console.log(this.$router)
+        console.log(this.$route)
         // this.location.href(`${this.$axios.defaults.baseURL}/post/detail?id=${id}`)
     }
 }

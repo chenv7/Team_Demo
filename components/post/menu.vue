@@ -1,10 +1,6 @@
 <template>
   <div class="menu">
-<<<<<<< HEAD
-    <ul type="flex" style="padding:0">
-=======
     <ul type="flex">
->>>>>>> a465af5ec2d68741a4b9342b223307cca9cd54d7
       <li
         class="menu-item"
         v-for="(item,index) in menuData"
@@ -12,18 +8,6 @@
         @mouseenter="handleHover(index)"
         @mouseleave="handleLeave"
       >
-<<<<<<< HEAD
-        <!-- 左边导航栏 -->
-        <div class="left">
-          {{item.type}}
-          <i class="el-icon-arrow-right"></i>
-        </div>
-        <!-- 右边隐藏导航栏详情 -->
-        <ul class="right" v-show="isRight===index">
-          <li v-for="(item2,index2) in item.children" :key="index2" @click="handleCity(item2.city)">
-            <i>{{index2+1}}</i>
-            <em>{{item2.city}}</em>
-=======
         <div class="left">
           {{item.type}}
           <i class="el-icon-arrow-right">&nbsp;&nbsp;</i>
@@ -32,7 +16,6 @@
           <li v-for="(item2,index2) in item.children" :key="index2" @click="handleCity(item2.city)">
             &nbsp;<i>{{index2+1}} &nbsp;</i>
             &nbsp;<em>{{item2.city}}</em> &nbsp;
->>>>>>> a465af5ec2d68741a4b9342b223307cca9cd54d7
             <span>{{item2.desc}}</span>
           </li>
         </ul>

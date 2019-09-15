@@ -14,7 +14,9 @@
         <el-upload
           action=""
           list-type="picture-card"
+          :on-preview="handlePictureCardPreview"
           :http-request="handleFile" 
+          :on-success="handleSuccess"
           :headers="
           {Authorization: `Bearer [${$store.state.user.userInfo.token}]`}"
           name="files"
@@ -60,6 +62,11 @@ export default {
     handleRemove(file, fileList) {
       console.log(file, fileList);
       // this.handleUpload=fileList
+    },
+    handleSuccess(response, file, fileList){
+      // console.log(response, 111);
+      // console.log(file, 222);
+      console.log(fileList,333)
     },
     handlePictureCardPreview(file) {
       this.dialogImageUrl = file.url;
