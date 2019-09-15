@@ -6,6 +6,7 @@
       <el-breadcrumb-item>南京市酒店预订</el-breadcrumb-item>
     </el-breadcrumb>
     <!-- 输入框内容区 -->
+<<<<<<< HEAD
     <el-row type="flex">
       <el-col :span="4">
         <el-input placeholder="目的地"></el-input>
@@ -205,11 +206,27 @@
         :total="total"
       ></el-pagination>
     </div>
+=======
+    <HotelMap :data="hotelData" />
+>>>>>>> 2a8389aa746beb4b96fc0f7bde143ce66babc2e8
   </div>
 </template>
 
 <script>
+import HotelMap from "@/components/hotel/hotel_map";
 export default {
+  components: {
+    HotelMap
+  },
+  mounted() {
+    /* 请求酒店数据 */
+    this.$axios({
+      url: "http://157.122.54.189:9095/hotels?",
+    }).then(res => {
+      console.log(res.data.data[0]);
+      this.hotelData = res.data.data[0].scenic;
+    });
+  },
   data() {
     return {
       grangehotel: [], //酒店选项
@@ -233,7 +250,10 @@ export default {
       total: 0, //总条数
       value1: 4000, //滑块
       value6: "",
+<<<<<<< HEAD
       value12: 3.5, //评分
+=======
+>>>>>>> 2a8389aa746beb4b96fc0f7bde143ce66babc2e8
       options3: [
         {
           label: "热门城市",
@@ -249,7 +269,12 @@ export default {
           ]
         }
       ],
+<<<<<<< HEAD
       value7: ""
+=======
+      value7: "",
+      hotelData: []
+>>>>>>> 2a8389aa746beb4b96fc0f7bde143ce66babc2e8
     };
   },
   methods: {
