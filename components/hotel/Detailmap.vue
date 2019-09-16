@@ -69,7 +69,7 @@ export default {
     this.$axios({
       url: "/hotels",
       params: {
-        id: 1
+        id: this.$route.query.id
       }
     }).then(res => {
       console.log(res, "445");
