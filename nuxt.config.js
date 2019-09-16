@@ -1,9 +1,4 @@
-<<<<<<< HEAD
-=======
 
-
-
->>>>>>> d3ef2bab8b15a7af18a5ea0344298c6dd90c7f35
 export default {
     mode: 'universal',
     /*
