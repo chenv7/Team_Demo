@@ -3,7 +3,6 @@
     <div class="maplan">
       <el-row class="mapda">
         <el-col class="map_ditu" :span="16">
-          <div class="dituweiz"></div>
           <div id="container"></div>
         </el-col>
         <el-col class="map_right" :span="8">
@@ -124,14 +123,6 @@ export default {
     .mapda {
       .map_ditu {
         position: relative;
-        .dituweiz {
-          width: 30px;
-          height: 30px;
-          background-color: red;
-          position: absolute;
-          top: 424px;
-          left: 265px;
-        }
       }
       .map_right {
         height: 360px;

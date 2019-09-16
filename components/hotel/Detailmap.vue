@@ -28,15 +28,15 @@
       <div class="datee">
         <el-row class="gaoai">
           <el-col class="datuu" :span="15">
-            <img src="http://157.122.54.189:9093/images/hotel-pics/1.jpeg" alt />
+            <img :src="`http://157.122.54.189:9093/images/hotel-pics/${bigPic}.jpeg`" alt />
           </el-col>
           <el-col class="xiaottu" :span="9">
-            <img src="http://157.122.54.189:9093/images/hotel-pics/1.jpeg" alt />
-            <img src="http://157.122.54.189:9093/images/hotel-pics/2.jpeg" alt />
-            <img src="http://157.122.54.189:9093/images/hotel-pics/3.jpeg" alt />
-            <img src="http://157.122.54.189:9093/images/hotel-pics/4.jpeg" alt />
-            <img src="http://157.122.54.189:9093/images/hotel-pics/5.jpeg" alt />
-            <img src="http://157.122.54.189:9093/images/hotel-pics/6.jpeg" alt />
+            <a href="javascript:;">
+              <img :src="`http://157.122.54.189:9093/images/hotel-pics/${item}.jpeg`"
+             alt v-for="(item,index) in picData" 
+             :key="index"
+             @click="handleClick(item)"/>
+            </a>
           </el-col>
         </el-row>
       </div>
@@ -60,7 +60,9 @@ export default {
   data () {
     return {
       tableData: [],
-      hotelData: {}
+      hotelData: {},
+      bigPic : '1',
+      picData : [1,2,3,4,5,6]
     }
   },
   mounted () {
@@ -79,6 +81,9 @@ export default {
   methods: {
     dianji() {
       window.open("https://hotels.ctrip.com/hotel/694679.html");
+    },
+    handleClick(item) {
+      this.bigPic = item
     }
   }
 }
