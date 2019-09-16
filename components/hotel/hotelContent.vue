@@ -92,15 +92,15 @@
         <!-- 左侧图片 -->
         <el-col :span="8" class="docs-sidebar">
           <span class="img-wrapper">
-            <a :href="`${item.id}`">
+            <div @click="handleChoose(this.form.id)">
               <img :src="`${item.photos}`" width="320px" height="210px" />
-            </a>
+            </div>
           </span>
         </el-col>
         <!-- 中间详情 -->
         <el-col :span="10" class="nationally">
           <h4 class="hotel-cn-name">
-            <a href="#">{{item.name}}</a>
+            <div @click="handleChoose(this.form.id)">{{item.name}}</div>
           </h4>
           <div class="hotel-en-name">
             <span>{{item.alias}}</span>
@@ -215,6 +215,14 @@ export default {
     // 当前页数
     handleCurrentChange(val) {
       this.form._start = val;
+    },
+    handleChoose(id, seatId) {
+      this.$router.push({
+        path: "/hotel/sldkfjase",
+        query: {
+          id
+        }
+      });
     }
   },
   mounted() {
