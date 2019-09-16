@@ -103,6 +103,9 @@ export default {
       // background-color: blue;
       
       p{
+        img{
+          width: 700px;
+        }
         span{
           img{
             width: 700px;
