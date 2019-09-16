@@ -57,7 +57,7 @@ export default {
         {
           name: "酒店",
           placeholder: "请输入城市搜索酒店",
-          pageUrl: "/hotel?city="
+          pageUrl: "/hotel?city=74"
         },
         {
           name: "机票",
