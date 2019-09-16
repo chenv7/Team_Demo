@@ -5,7 +5,6 @@
     <Header />
     <!-- 内容占位组件 -->
     <nuxt />
-    <Footer/>
     <!-- 页脚组件 -->
     <Footer />
   </div>
