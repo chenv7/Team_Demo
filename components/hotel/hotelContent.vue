@@ -92,7 +92,7 @@
         <!-- 左侧图片 -->
         <el-col :span="8" class="docs-sidebar">
           <span class="img-wrapper">
-            <div @click="handleChoose(this.form.id)">
+            <div class="tiao" @click="handleChoose">
               <img :src="`${item.photos}`" width="320px" height="210px" />
             </div>
           </span>
@@ -100,7 +100,7 @@
         <!-- 中间详情 -->
         <el-col :span="10" class="nationally">
           <h4 class="hotel-cn-name">
-            <div @click="handleChoose(this.form.id)">{{item.name}}</div>
+            <div class="tiao" @click="handleChoose">{{item.name}}</div>
           </h4>
           <div class="hotel-en-name">
             <span>{{item.alias}}</span>
@@ -216,11 +216,12 @@ export default {
     handleCurrentChange(val) {
       this.form._start = val;
     },
-    handleChoose(id, seatId) {
+    handleChoose(id) {
+      console.log(id);
       this.$router.push({
         path: "/hotel/sldkfjase",
         query: {
-          id
+          id: this.formlist.id
         }
       });
     }
@@ -336,6 +337,9 @@ export default {
 el-col {
   margin-left: -10px;
   margin-right: -10px;
+}
+.tiao{
+  cursor: pointer;
 }
 
 // 分页
