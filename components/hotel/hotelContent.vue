@@ -92,7 +92,7 @@
         <!-- 左侧图片 -->
         <el-col :span="8" class="docs-sidebar">
           <span class="img-wrapper">
-            <div class="tiao" @click="handleChoose">
+            <div class="tiao" @click="handleChoose(item.id)">
               <img :src="`${item.photos}`" width="320px" height="210px" />
             </div>
           </span>
@@ -217,12 +217,9 @@ export default {
       this.form._start = val;
     },
     handleChoose(id) {
-      console.log(id);
+      console.log(id, "id");
       this.$router.push({
-        path: "/hotel/sldkfjase",
-        query: {
-          id: this.formlist.id
-        }
+        path: "/hotel/sldkfjase?id=" + id
       });
     }
   },
@@ -338,7 +335,7 @@ el-col {
   margin-left: -10px;
   margin-right: -10px;
 }
-.tiao{
+.tiao {
   cursor: pointer;
 }
 
