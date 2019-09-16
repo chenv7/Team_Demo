@@ -159,9 +159,6 @@ export default {
         }
         // 将创建的点标记添加到已有的地图实例：
         map.add(fuckyou);
-        function zuobiao(index) {
-          console.log(index)
-        }
       };
       var url =
         "https://webapi.amap.com/maps?v=1.4.15&key=	744f1f3c00c95ef7123cb8ede6aa2a32&callback=onLoad";
