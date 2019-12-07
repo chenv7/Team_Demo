@@ -6,6 +6,7 @@
     <!-- 内容占位组件 -->
     <nuxt />
     <!-- 页脚组件 -->
+    <!-- shshsh -->
     <Footer />
   </div>
 </template>
